@@ -65,6 +65,20 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 
+# ── Flag banner ───────────────────────────────────────────────────────────────
+# Benin flag stretched into a strip: green band at the hoist, yellow over red.
+st.markdown(
+    """<div role="img" aria-label="Flag of Benin"
+         style="display:flex;height:50px;border-radius:4px;overflow:hidden;margin:0 0 0.6rem 0;">
+        <div style="flex:0 0 60px;background:#008751;"></div>
+        <div style="flex:1;display:flex;flex-direction:column;">
+            <div style="flex:1;background:#FCD116;"></div>
+            <div style="flex:1;background:#E8112D;"></div>
+        </div>
+    </div>""",
+    unsafe_allow_html=True,
+)
+
 # ── Title ─────────────────────────────────────────────────────────────────────
 title_col, toggle_col, data_col = st.columns([3, 1.3, 0.3])
 with title_col:
@@ -98,7 +112,7 @@ survey = option_menu(
     default_index=0,
     orientation="horizontal",
     styles={
-        "container": {"background-color": FEM_BROWN, "padding": "0 4px", "margin": "0 0 4px 0"},
+        "container": {"max-width": "100%", "background-color": FEM_BROWN, "padding": "0 4px", "margin": "0 0 4px 0"},
         "icon":      {"color": "#f5e6d8", "font-size": "15px"},
         "nav-link":  {"color": "#f5e6d8", "padding": "5px 18px", "--hover-color": FEM_ORANGE,
                       "font-size": "14px", "font-weight": "600"},
@@ -144,7 +158,7 @@ elif survey == "Formative Research":
         default_index=0,
         orientation="horizontal",
         styles={
-            "container": {"background-color": FEM_TAUPE, "padding": "0", "margin": "0"},
+            "container": {"max-width": "100%", "background-color": FEM_TAUPE, "padding": "0", "margin": "0"},
             "icon":      {"color": FEM_ORANGE, "font-size": "14px"},
             "nav-link":  {"padding": "4px 10px", "--hover-color": FEM_STEEL},
             "nav-link-selected": {"background-color": FEM_NAVY},
@@ -202,7 +216,7 @@ elif survey == "Phone Pulse":
         default_index=0,
         orientation="horizontal",
         styles={
-            "container": {"background-color": FEM_STEEL, "padding": "0", "margin": "0"},
+            "container": {"max-width": "100%", "background-color": FEM_STEEL, "padding": "0", "margin": "0"},
             "icon":      {"color": "#dce8f0", "font-size": "14px"},
             "nav-link":  {"color": "#dce8f0", "padding": "4px 10px",
                           "--hover-color": FEM_TAUPE},

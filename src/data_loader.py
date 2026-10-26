@@ -119,6 +119,20 @@ def load_fp_unmet():
         return None
 
 
+# Headline indicators with 95% CIs (mCPR, unmet need, unmet demand, demand
+# satisfied, awareness) for the full sample and all women. Run
+# `python -m pipeline.run_pipeline --pages family_planning` (from
+# pipeline_output/), upload benin_app/data/fp_headline.csv to Drive, and paste
+# its file ID below.
+FP_HEADLINE_FILE_ID = "PASTE_FP_HEADLINE_FILE_ID"
+
+def load_fp_headline():
+    try:
+        return _load(FP_HEADLINE_FILE_ID)
+    except Exception:
+        return None
+
+
 # ── Personality page ──────────────────────────────────────────────────────────
 
 def load_personality_life_goals():
