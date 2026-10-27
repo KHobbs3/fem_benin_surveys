@@ -1,3 +1,4 @@
+import os
 import re
 
 import pandas as pd
@@ -65,7 +66,8 @@ def clean_column_name(col):
 
 
 def load_radio_by_station():
-    df = _load("1B07CtKdW6EG_VLRf2xuTH0TFsNAEk7QO")  # Benin_question_table_by_station_26_08_26.csv
+    df = _load("1iL3jfNfHRkhrVvgUCI0OR_1_Ys0JnQrh")  # Benin_question_table_by_station (2026-10-27 upload)
+                                                       # "1B07CtKdW6EG_VLRf2xuTH0TFsNAEk7QO") - 26_08_26 version
                                                        # "1OkbqLDi68k0cPYqdPorA_sn2IPfTHrLU") - 26_08_19 version
                                                        # "1b6F3K6AaetMr86TnuYtX458ikOC7cUo2") - 26_08_18 version
     df.set_index(df.columns[0], inplace=True)
@@ -73,11 +75,18 @@ def load_radio_by_station():
 
 
 def load_radio_by_state():
-    df = _load("1twXCWaUAv0Lx82LZJAzwn_AbhWwPIeW2")  # Benin_question_table_by_state_26_08_26.csv
+    df = _load("1vu-5PT3bkyoTnD7dLzyR9kU9_zyM9aa8")  # Benin_question_table_by_state (2026-10-27 upload)
+                                                       # "1twXCWaUAv0Lx82LZJAzwn_AbhWwPIeW2") - 26_08_26 version
                                                        # "1pxlnnsHf0CylXGh76y_52fUoP3HbOkwm") - 26_08_19 version
                                                        # "1NttFCzxCcloaK5CFIaVXQiL_pYsV7VYe") - 26_08_18 version
     df.set_index(df.columns[0], inplace=True)
     return df
+
+
+# Benin_radio_station_overlap_<date>.csv (etl_radio.py). Not shown on any page yet -- the Radio
+# page derives its overlap notes from the station table.
+def load_radio_station_overlap():
+    return _load("1C1ONHf0UuAIgtQT2qXUcv2E-6AzGXJC9")  # 2026-10-27 upload
 
 
 # ── Family planning page ──────────────────────────────────────────────────────
@@ -281,10 +290,12 @@ def load_culture_clusters_elbow():
 # left over from that project, which never matched Benin's French/Fon text,
 # and get_statement_name() also silently failed on Benin's blank `hint` column
 # -- and (2) add a REGION split (North-East/North-West/South-South/Mid-South,
-# mapped from `province`). TODO: upload the new file to Drive and paste its
-# file ID below in place of the 26_08_18 one.
+# mapped from `province`).
+# 2026-10-27: new upload. The grouped-nonusers variant
+# (Benin_drivers-barriers_table_grpd_nonusers_*.csv) isn't read by any page, so it has no loader.
 def load_drivers_barriers():
-    return _load("1Lohb9Crv6rrf0zsgQvyHbKF3Ab0Xxk2r")  # Benin_drivers-barriers_table_26_08_24.csv
+    return _load("1Aa89PFuWgKZtBXavTGD-fdzX2nFs2mDI")  # Benin_drivers-barriers_table (2026-10-27 upload)
+    # "1Lohb9Crv6rrf0zsgQvyHbKF3Ab0Xxk2r" - 26_08_24 version
 
 
 # ── Phone Pulse pages -- NOT COLLECTED FOR BENIN ───────────────────────────
@@ -361,3 +372,16 @@ REGIONS = ["North-East", "North-West", "South-South", "Mid-South"]
 # NORTH_SOUTH_REGIONS in pipeline/config.py: North = North-East + North-West,
 # South = South-South + Mid-South.
 REGION_NS = ["North", "South"]
+
+
+# Parent-category groups of drivers/barriers (pipeline: --pages driver_barrier_groups).
+# Reads the local copy in data/ first; paste the Drive file ID here once uploaded.
+DRIVER_BARRIER_GROUPS_ID = ""
+
+
+def load_driver_barrier_groups():
+    path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                        "data", "driver_barrier_groups.csv")
+    if os.path.exists(path):
+        return pd.read_csv(path, index_col=0)
+    return _load(DRIVER_BARRIER_GROUPS_ID, index_col=0) if DRIVER_BARRIER_GROUPS_ID else None
